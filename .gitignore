@@ -1,0 +1,11 @@
+.idea
+*.pyc
+*.swp
+venv
+venv/
+tmp/
+.noseids
+**/.DS_Store
+.project
+.pydevproject
+config.yml

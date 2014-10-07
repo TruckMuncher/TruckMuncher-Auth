@@ -1,0 +1,4 @@
+Flask==0.10.1
+requests==2.4.3
+python-twitter==2.0
+PyYAML==3.11
