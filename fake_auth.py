@@ -70,7 +70,7 @@ def verify_twitter(tokens):
         raise_exception()
     if len(oauth_token) >= 2 and oauth_token[:2] != 'tw':
         raise_exception()
-    return {'user_id': oauth_token[2:], 'username': oauth_secret}
+    return {'user_id': oauth_token, 'username': oauth_secret}
 
 
 def verify_facebook(tokens):
@@ -81,7 +81,7 @@ def verify_facebook(tokens):
         raise_exception()
     if len(access_token) >= 2 and access_token[:2] != 'fb':
         raise_exception()
-    (user_id, username) = access_token[2:].split(',')
+    (user_id, username) = access_token.split(',')
     return {'user_id': user_id, 'username': username}
 
 
