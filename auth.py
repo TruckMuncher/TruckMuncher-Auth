@@ -10,34 +10,25 @@ app = Flask(__name__)
 
 
 class InvalidAuthorization(Exception):
-    status_code = 400
+    status_code = 401
 
-    def __init__(self, message, status_code=400, payload=None):
+    def __init__(self, message, status_code=401, payload=None):
         Exception.__init__(self)
         self.message = message
         if status_code is not None:
             self.status_code = status_code
         self.payload = payload
 
-    def to_dict(self):
-        rv = dict(self.payload or ())
-        rv['message'] = self.message
-        return rv
-
 
 @app.errorhandler(InvalidAuthorization)
 def handle_invalid_authorization(error):
-    response = jsonify(error.to_dict())
-    response.status_code = error.status_code
-    return response
+    return error.message, error.status_code
 
 
 @app.errorhandler(TwitterError)
 def handle_twitter_error(error):
     del error.message[0]['code']
-    response = jsonify(error.message[0])
-    response.status_code = 400
-    return response
+    return error.message[0], 401
 
 
 @app.route('/', methods=['POST'])
@@ -54,14 +45,15 @@ def verify():
 def validate_header_parts(components):
     tokens = {}
     for part in components:
-        (key, value) = part.strip().split('=')
-        key = key.strip()
-        value = value.strip()
-        if key != 'oauth_token' \
-                and key != 'oauth_secret' \
-                and key != 'access_token':
-            raise_exception()
-        tokens[key] = value
+        if '=' in part:
+            (key, value) = part.strip().split('=')
+            key = key.strip()
+            value = value.strip()
+            if key != 'oauth_token' \
+                    and key != 'oauth_secret' \
+                    and key != 'access_token':
+                raise_exception()
+            tokens[key] = value
     return tokens
 
 
