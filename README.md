@@ -4,16 +4,6 @@ TruckMuncher Auth
 ## Project Setup ##
 These steps are used for running the server locally.
 
-Before you begin you will need a config.yml in the root of the project. This
-file needs four keys
-
-    facebook_app_id: ...
-    facebook_secret_key: ...
-    twitter_consumer_key: ...
-    twitter_consumer_secret: ...
-
-Insert appropriate values in config.yml before running the auth.py server.
-
 1. Install [PIP](http://www.pip-installer.org/en/latest/installing.html)
 2. Install Virtualenv
 
@@ -35,3 +25,21 @@ Insert appropriate values in config.yml before running the auth.py server.
 
         $ python auth.py
         $ python fake_auth.py
+
+### Using Real Auth
+You will need to configure the `config.yml` in the root of the project. This file needs four keys
+
+    facebook_app_id: ...
+    facebook_secret_key: ...
+    twitter_consumer_key: ...
+    twitter_consumer_secret: ...
+
+Insert appropriate values in `config.yml` before running the `auth.py` server.
+
+### Using Fake Auth
+Using fake auth, the user is always authenticated and is never checked against Twitter or Facebook.
+
+For a Facebook user, the value of your Authorization header should be formatted as `access_token=theUserID|theUserName`.
+
+For a Twitter user, the value of your Authorization header should be formatted as 
+`oauth_token=theUserId,oauth_secret=theUserName`.

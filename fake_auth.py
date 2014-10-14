@@ -75,7 +75,7 @@ def verify_facebook(tokens):
         raise_exception()
     if len(access_token) >= 2 and access_token[:2] != 'fb':
         raise_exception()
-    (user_id, username) = access_token.split(',')
+    (user_id, username) = access_token.split('|')
     return {'user_id': user_id, 'username': username}
 
 
