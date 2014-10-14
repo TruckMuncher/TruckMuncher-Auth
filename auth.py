@@ -28,7 +28,7 @@ def handle_invalid_authorization(error):
 @app.errorhandler(TwitterError)
 def handle_twitter_error(error):
     del error.message[0]['code']
-    return error.message[0], 401
+    return error.message[0]['message'], 401
 
 
 @app.route('/', methods=['POST'])
@@ -88,7 +88,7 @@ if __name__ == "__main__":
     config_path = '%s%s' % (dirname(dirname(__file__)), 'config.yml')
     with open(config_path) as data:
         configuration = yaml.safe_load(data)
-        facebook_app_id = configuration['facebook_app_id']
+        facebook_app_id = str(configuration['facebook_app_id'])
         facebook_secret_key = configuration['facebook_secret_key']
         twitter_consumer_key = configuration['twitter_consumer_key']
         twitter_consumer_secret = configuration['twitter_consumer_secret']
