@@ -31,6 +31,16 @@ def verify():
     return jsonify(user)
 
 
+@app.route('/username', methods=['POST'])
+def get_username():
+    auth = request.headers.get('Authorization').strip().split(',')
+    tokens = validate_header_parts(auth)
+    if 'access_token' not in tokens:
+        raise_exception(message='Only Facebook users must retrieve their usernames separately from their user')
+    user = verify_facebook(tokens)
+    return jsonify({'username': user['username']})
+
+
 def validate_header_parts(components):
     """
     Only allow setting the oauth_token, oauth_secret, and access_token headers.
