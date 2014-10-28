@@ -42,6 +42,19 @@ def verify():
     return jsonify(user)
 
 
+@app.route('/username', methods=['POST'])
+def get_username():
+    auth = request.headers.get('Authorization').strip().split(',')
+    tokens = validate_header_parts(auth)
+    if 'access_token' not in tokens:
+        raise_exception(message='Only Facebook users must retrieve their usernames separately from their user')
+    resp = requests.get('https://graph.facebook.com/me?access_token=%s' % (tokens['access_token'],), headers={'Accept': 'application/json'})
+    user = resp.json()
+    if 'name' not in user:
+        raise_exception(message='Invalid Facebook user specified')
+    return jsonify({'username': user['name']})
+
+
 def validate_header_parts(components):
     tokens = {}
     for part in components:
