@@ -105,4 +105,4 @@ if __name__ == "__main__":
         facebook_secret_key = configuration['facebook_secret_key']
         twitter_consumer_key = configuration['twitter_consumer_key']
         twitter_consumer_secret = configuration['twitter_consumer_secret']
-    app.run()
+    app.run(host='0.0.0.0')
