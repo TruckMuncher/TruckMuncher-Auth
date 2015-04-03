@@ -64,7 +64,8 @@ def validate_header_parts(components):
             value = value.strip()
             if key != 'oauth_token' \
                     and key != 'oauth_secret' \
-                    and key != 'access_token':
+                    and key != 'access_token' \
+                    and key != 'session_token':
                 raise_exception()
             tokens[key] = value
     return tokens
