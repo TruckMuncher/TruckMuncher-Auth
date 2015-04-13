@@ -15,7 +15,7 @@ These steps are used for running the server locally.
 
 4. Activate the virtualenv
 
-        $ source venv/bin/active
+        $ source venv/bin/activate
 
 5. Install project dependencies
 
